@@ -1,22 +1,28 @@
 package com.example.android.booklistinapp;
 
+import android.util.Log;
+
 public class BookDetail
 {
+    public static final String LOG_TAG = BookDetail.class.getName();
     private String title, authors, publisher, description;
-    private int ratingCount;
+    private double rating;
     private String imageLink;
+    private String bookPreviewLink;
 
-    public BookDetail(String title, String authors, String publisher, String description, int ratingCount, String imageLink)
+    public BookDetail(String title, String authors, String publisher, String description, double rating, String imageLink, String bookPreviewLink)
     {
+        Log.i(LOG_TAG, "INSIDE BookDetail Constructor");
         this.title = title;
         this.authors = authors;
         this.publisher = publisher;
         this.description = description;
-        this.ratingCount = ratingCount;
+        this.rating = rating;
         this.imageLink = imageLink;
+        this.bookPreviewLink = bookPreviewLink;
     }
 
-    public String getTitle(String title) {
+    public String getTitle() {
         return title;
     }
 
@@ -32,12 +38,16 @@ public class BookDetail
         return description;
     }
 
-    public int getRatingCount() {
-        return ratingCount;
+    public double getRating() {
+        return rating;
     }
 
     public String getImageLink() {
         return imageLink;
+    }
+
+    public String getBookPreviewLink() {
+        return bookPreviewLink;
     }
 
     @Override
@@ -47,8 +57,9 @@ public class BookDetail
                 ", authors='" + authors + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", description='" + description + '\'' +
-                ", ratingCount=" + ratingCount +
+                ", rating=" + rating +
                 ", imageLink='" + imageLink + '\'' +
+                ", bookPreviewLink='" + bookPreviewLink + '\'' +
                 '}';
     }
 }

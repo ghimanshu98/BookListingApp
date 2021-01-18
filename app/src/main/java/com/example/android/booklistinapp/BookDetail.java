@@ -5,12 +5,12 @@ import android.util.Log;
 public class BookDetail
 {
     public static final String LOG_TAG = BookDetail.class.getName();
-    private String title, authors, publisher;//, description;
+    private String title, authors, publisher;
     private double rating;
     private String imageLink;
     private String bookPreviewLink;
 
-    public BookDetail(String title, String authors, String publisher, /*String description, */double rating, String imageLink, String bookPreviewLink)
+    public BookDetail(String title, String authors, String publisher, double rating, String imageLink, String bookPreviewLink)
     {
         Log.i(LOG_TAG, "INSIDE BookDetail Constructor");
         this.title = title;
@@ -34,10 +34,6 @@ public class BookDetail
         return publisher;
     }
 
-//    public String getDescription() {
-//        return description;
-//    }
-
     public double getRating() {
         return rating;
     }
@@ -56,7 +52,6 @@ public class BookDetail
                 "title='" + title + '\'' +
                 ", authors='" + authors + '\'' +
                 ", publisher='" + publisher + '\'' +
-               // ", description='" + description + '\'' +
                 ", rating=" + rating +
                 ", imageLink='" + imageLink + '\'' +
                 ", bookPreviewLink='" + bookPreviewLink + '\'' +

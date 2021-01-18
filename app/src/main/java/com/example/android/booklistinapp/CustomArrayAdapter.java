@@ -1,9 +1,6 @@
 package com.example.android.booklistinapp;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class CustomArrayAdapter extends ArrayAdapter {

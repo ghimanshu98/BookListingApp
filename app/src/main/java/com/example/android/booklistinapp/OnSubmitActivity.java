@@ -3,10 +3,10 @@ package com.example.android.booklistinapp;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,9 +21,11 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
 
-public class OnSubmitActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<BookDetail>> {
+public class OnSubmitActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<BookDetail>>
+{
     private String url = "https://www.googleapis.com/books/v1/volumes?q=";
 
     public static String LOG_TAG = OnSubmitActivity.class.getName();
@@ -38,39 +40,13 @@ public class OnSubmitActivity extends AppCompatActivity implements LoaderManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
+        emptyTextView = (TextView) findViewById(R.id.emptyTextView);
 
-        start();
-
-
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                start();
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(swipeRefreshLayout.isRefreshing())
-                        {
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
-                    }
-                }, 1000);
-            }
-        });
-    }
-
-    private void start() {
-        if (isOnline())
+        if(isOnline())
         {
-
-            progressBar = (ProgressBar) findViewById(R.id.progressBar);
-            progressBar.setVisibility(View.VISIBLE);
-
-            emptyTextView = (TextView) findViewById(R.id.emptyTextView);
-
             Intent intent = getIntent();
             String searched_text = intent.getStringExtra("BOOK_KEY");
             //Log.i(LOG_TAG, "Searched Book received int Intent: "+searched_text);
@@ -103,12 +79,23 @@ public class OnSubmitActivity extends AppCompatActivity implements LoaderManager
                     }
                 }
             });
-        } else {
+        }
+        else
+        {
             progressBar.setVisibility(View.GONE);
             emptyTextView.setText("No Internet Available!!\nCheck Your Internet Connection.");
         }
-    }
 
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent(OnSubmitActivity.this, OnSubmitActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
 
     @NonNull
     @Override
@@ -117,11 +104,13 @@ public class OnSubmitActivity extends AppCompatActivity implements LoaderManager
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<ArrayList<BookDetail>> loader, ArrayList<BookDetail> data) {
+    public void onLoadFinished(@NonNull Loader<ArrayList<BookDetail>> loader, ArrayList<BookDetail> data)
+    {
         progressBar.setVisibility(View.GONE);
         emptyTextView.setText("Sorry!! Got No Books to Show :(");
         adapter.clear();
-        if (data != null && !data.isEmpty()) {
+        if(data != null && !data.isEmpty())
+        {
             adapter.addAll(data);
         }
     }
@@ -131,14 +120,18 @@ public class OnSubmitActivity extends AppCompatActivity implements LoaderManager
         adapter.clear();
     }
 
-    public boolean isOnline() {
+    public boolean isOnline()
+    {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            Log.i(LOG_TAG, "Internet_Connected " + "True");
+        if(networkInfo!= null && networkInfo.isConnected())
+        {
+            Log.i(LOG_TAG, "Internet_Connected "+"True");
             return true;
-        } else {
-            Log.i(LOG_TAG, "Internet_Connected " + "False");
+        }
+        else
+        {
+            Log.i(LOG_TAG, "Internet_Connected "+"False");
             return false;
         }
     }

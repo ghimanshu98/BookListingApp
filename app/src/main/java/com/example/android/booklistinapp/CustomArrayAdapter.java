@@ -43,7 +43,7 @@ public class CustomArrayAdapter extends ArrayAdapter {
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.book_image);
         Log.e(LOG_TAG, placeholder.getImageLink());
 
-        Glide.with(this.getContext()).load("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png").into(imageView);
+        Picasso.get().load("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dpfsd.png").placeholder(R.drawable.place_holder_image).into(imageView);
 
         //setting the book title
         TextView title_text = (TextView) listItemView.findViewById(R.id.book_name);
@@ -52,16 +52,20 @@ public class CustomArrayAdapter extends ArrayAdapter {
 
         //setting the author
         textView = (TextView) listItemView.findViewById(R.id.author_name);
-        textView.setText(placeholder.getAuthors());
+        textView.setText("by "+placeholder.getAuthors());
 
         //setting the publisher
         textView = (TextView) listItemView.findViewById(R.id.publisher);
-        textView.setText(placeholder.getPublisher());
+        textView.setText("Publisher : "+placeholder.getPublisher());
 
         //setting the description
-        textView = (TextView) listItemView.findViewById(R.id.description);
-        textView.setText(placeholder.getDescription());
-        textView.setMovementMethod(new ScrollingMovementMethod());
+//        textView = (TextView) listItemView.findViewById(R.id.description);
+//        textView.setText(placeholder.getDescription());
+//        textView.setMovementMethod(new ScrollingMovementMethod());
+
+        //setting the rating
+        textView = (TextView) listItemView.findViewById(R.id.rating);
+        textView.setText("Rating : "+placeholder.getRating());
 
         return listItemView;
     }

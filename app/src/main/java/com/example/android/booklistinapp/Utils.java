@@ -21,6 +21,7 @@ public class Utils {
 
     public static ArrayList<BookDetail> fetchDataFromUrl(String urlString)
     {
+
         URL url = createURL(urlString);
         String jsonResponse = null;
 
@@ -82,8 +83,12 @@ public class Utils {
         {
             e.printStackTrace();
         }finally {
-            httpsURLConnection.disconnect();
-            inputStream.close();
+            if(inputStream!=null)
+            {
+                inputStream.close();
+            }
+            if(httpsURLConnection != null)
+                httpsURLConnection.disconnect();
         }
         return jsonResponse;
     }
@@ -111,87 +116,81 @@ public class Utils {
 
     private static ArrayList<BookDetail> fetchDataFromJsonString(String jsonString)
     {
-        ArrayList<BookDetail> bookList = new ArrayList<>();
-        try {
-            JSONObject root = new JSONObject(jsonString);
-            //Parsing the json
+        ArrayList<BookDetail> bookList = new ArrayList<BookDetail>();
+        if(!jsonString.isEmpty() || jsonString != null) {
+            try {
+                JSONObject root = new JSONObject(jsonString);
+                //Parsing the json
 
-            JSONArray items = root.optJSONArray("items");
-            if(items != null)
-            {
-                for(int i=0; i < items.length(); i++) {
-                    JSONObject placeholder = items.optJSONObject(i);
+                JSONArray items = root.optJSONArray("items");
+                if (items != null) {
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject placeholder = items.optJSONObject(i);
 
-                    JSONObject volumeInfo = placeholder.optJSONObject("volumeInfo");
+                        JSONObject volumeInfo = placeholder.optJSONObject("volumeInfo");
 
-                    if(volumeInfo != null) {
+                        if (volumeInfo != null) {
 
-                        String title = "Not Found";
-                        if(volumeInfo.has("title"))
-                        {
-                            title = volumeInfo.optString("title");
-                        }
-
-                        JSONArray authors = null;
-                        if(volumeInfo.has("authors"))
-                        {
-                            authors = volumeInfo.optJSONArray("authors");
-                        }
-                        StringBuilder str = null;
-                        String author = null;
-                        if(authors != null) {
-                            str = new StringBuilder(authors.optString(0));
-                            for (int j = 1; j < authors.length(); j++) {
-                                str.append(", ");
-                                str.append(authors.optString(j));
+                            String title = "Not Found";
+                            if (volumeInfo.has("title")) {
+                                title = volumeInfo.optString("title");
                             }
-                            author = str.toString();
-                            Log.i(LOG_TAG, author);
-                        }
-                        else
-                        {
-                            str = new StringBuilder("Not Found");
-                            author = str.toString() ;
-                        }
 
-                        String publisher = "Not Found";
-                        if(volumeInfo.has("publisher")) {
-                            publisher = volumeInfo.optString("publisher");
-                        }
-                        //String description = volumeInfo.optString("description");
-
-                        double rating = 0.0;
-                        if (volumeInfo.has("averageRating")) {
-                            rating = volumeInfo.optDouble("averageRating");
-                        }
-
-                        JSONObject imageLinks = null;
-                        String imageLink = "Not Found";
-                        if(volumeInfo.has("imageLinks")) {
-                            imageLinks = volumeInfo.optJSONObject("imageLinks");
-                        }
-                        if(imageLinks != null)
-                        {
-                            if(imageLinks.has("thumbnail"))
-                            {
-                                imageLink = imageLinks.optString("thumbnail");
+                            JSONArray authors = null;
+                            if (volumeInfo.has("authors")) {
+                                authors = volumeInfo.optJSONArray("authors");
                             }
-                        }
+                            StringBuilder str = null;
+                            String author = null;
+                            if (authors != null) {
+                                str = new StringBuilder(authors.optString(0));
+                                for (int j = 1; j < authors.length(); j++) {
+                                    str.append(", ");
+                                    str.append(authors.optString(j));
+                                }
+                                author = str.toString();
+                                Log.i(LOG_TAG, author);
+                            } else {
+                                str = new StringBuilder("Not Found");
+                                author = str.toString();
+                            }
 
-                        String previewLink = "Not Found";
-                        if(volumeInfo.has("previewLink")) {
-                            previewLink = volumeInfo.optString("previewLink");
-                        }
+                            String publisher = "Not Found";
+                            if (volumeInfo.has("publisher")) {
+                                publisher = volumeInfo.optString("publisher");
+                            }
+                            //String description = volumeInfo.optString("description");
 
-                        bookList.add(new BookDetail(title, author, publisher, /*description,*/ rating, imageLink, previewLink));
-                        Log.i(LOG_TAG, bookList.get(i).toString());
+                            double rating = 0.0;
+                            if (volumeInfo.has("averageRating")) {
+                                rating = volumeInfo.optDouble("averageRating");
+                            }
+
+                            JSONObject imageLinks = null;
+                            String imageLink = "Not Found";
+                            if (volumeInfo.has("imageLinks")) {
+                                imageLinks = volumeInfo.optJSONObject("imageLinks");
+                            }
+                            if (imageLinks != null) {
+                                if (imageLinks.has("thumbnail")) {
+                                    imageLink = imageLinks.optString("thumbnail");
+                                }
+                            }
+
+                            String previewLink = "Not Found";
+                            if (volumeInfo.has("previewLink")) {
+                                previewLink = volumeInfo.optString("previewLink");
+                            }
+                            bookList.add(new BookDetail(title, author, publisher, rating, imageLink, previewLink));
+                            //Log.i(LOG_TAG, bookList.get(i).toString());
+                        }
                     }
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
+        //Log.i(LOG_TAG, "Size: "+bookList.size());
         return bookList;
     }
 }

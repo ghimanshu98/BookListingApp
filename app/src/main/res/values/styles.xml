@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
+    <style name="custom" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#FFEB3B</item>
+        <item name="colorPrimaryVariant">#FBC02D</item>
+        <item name="colorOnPrimary">#212121</item>
+        <!-- Secondary brand color. -->
+<!--        <item name="colorSecondary">#FFF9C4</item>-->
+<!--        <item name="colorSecondaryVariant">#FFEB3B</item>-->
+<!--        <item name="colorOnSecondary">#212121</item>-->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:homeAsUpIndicator">@drawable/baseline_keyboard_backspace_black_18dp</item>
+    </style>
+</resources>

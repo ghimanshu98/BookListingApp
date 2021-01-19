@@ -1,9 +1,6 @@
 package com.example.android.booklistinapp;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
 import java.util.ArrayList;
 
 public class CustomArrayAdapter extends ArrayAdapter {
@@ -42,8 +35,12 @@ public class CustomArrayAdapter extends ArrayAdapter {
         //setting the book image using picasso
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.book_image);
         Log.e(LOG_TAG, placeholder.getImageLink());
+        if(placeholder.getImageLink() != "Not Found")
+            new ImageLoadTask(placeholder.getImageLink(), imageView).execute();
+        else
+            imageView.setImageResource(R.drawable.place_holder_image);
 
-        Picasso.get().load("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dpfsd.png").placeholder(R.drawable.place_holder_image).into(imageView);
+        //Picasso.get().load("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dpfsd.png").placeholder(R.drawable.place_holder_image).into(imageView);
 
         //setting the book title
         TextView title_text = (TextView) listItemView.findViewById(R.id.book_name);

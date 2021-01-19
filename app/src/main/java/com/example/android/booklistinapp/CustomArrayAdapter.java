@@ -37,8 +37,12 @@ public class CustomArrayAdapter extends ArrayAdapter {
         //setting the book image using picasso
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.book_image);
         Log.e(LOG_TAG, placeholder.getImageLink());
+        if(placeholder.getImageLink() != "Not Found")
+            new ImageLoadTask(placeholder.getImageLink(), imageView).execute();
+        else
+            imageView.setImageResource(R.drawable.place_holder_image);
 
-        Picasso.get().load("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dpfsd.png").placeholder(R.drawable.place_holder_image).into(imageView);
+        //Picasso.get().load("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dpfsd.png").placeholder(R.drawable.place_holder_image).into(imageView);
 
         //setting the book title
         TextView title_text = (TextView) listItemView.findViewById(R.id.book_name);

@@ -87,7 +87,8 @@ public class Utils {
             {
                 inputStream.close();
             }
-            httpsURLConnection.disconnect();
+            if(httpsURLConnection != null)
+                httpsURLConnection.disconnect();
         }
         return jsonResponse;
     }

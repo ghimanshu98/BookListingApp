@@ -3,25 +3,26 @@ package com.example.android.booklistinapp;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.net.NetworkInterface;
 import java.util.ArrayList;
 
 public class OnSubmitActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<BookDetail>>
@@ -35,23 +36,31 @@ public class OnSubmitActivity extends AppCompatActivity implements LoaderManager
 
     private CustomArrayAdapter adapter;
 
+    private String searched_text = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_list);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
         emptyTextView = (TextView) findViewById(R.id.emptyTextView);
 
+        Intent intent = getIntent();
+        searched_text = intent.getStringExtra("BOOK_KEY");
+        //Log.i(LOG_TAG, "Searched Book received int Intent: "+searched_text);
+        url = url + searched_text + "&maxResults=20";
+        Log.e(LOG_TAG, "url: " + url);
+
         if(isOnline())
         {
-            Intent intent = getIntent();
-            String searched_text = intent.getStringExtra("BOOK_KEY");
-            //Log.i(LOG_TAG, "Searched Book received int Intent: "+searched_text);
-            url = url + searched_text + "&maxResults=20";
-            Log.e(LOG_TAG, "url: " + url);
 
             //Empty ArrayList
             getSupportLoaderManager().initLoader(1, null, this).forceLoad();
@@ -86,11 +95,12 @@ public class OnSubmitActivity extends AppCompatActivity implements LoaderManager
             emptyTextView.setText("No Internet Available!!\nCheck Your Internet Connection.");
         }
 
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        Button refresh = (Button) findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
+            public void onClick(View v) {
                 Intent intent = new Intent(OnSubmitActivity.this, OnSubmitActivity.class);
+                intent.putExtra("BOOK_KEY", searched_text);
                 startActivity(intent);
                 finish();
             }

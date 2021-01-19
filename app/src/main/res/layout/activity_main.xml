@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
+    android:background="@color/colorSecondary"
     >
 
     <androidx.appcompat.widget.Toolbar
@@ -14,7 +15,7 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@color/white"
+        android:background="@color/primaryColor"
         app:titleTextColor="@color/black"
         />
 
@@ -30,23 +31,34 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Book Name to Search"
+        android:hint="@string/SearchHint"
+        android:textColorHint="@color/onPrimary"
         android:paddingLeft="8dp"
         android:inputType="text"
         android:layout_marginTop="5dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="18sp"
+        android:textColor="@color/onPrimary"
+        android:fontFamily="sans-serif-medium"
         />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/onPrimary"
+        android:layout_below="@id/search"/>
 
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:text="@string/submitButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:fontFamily="sans-serif-medium"
         />
 
 </RelativeLayout>

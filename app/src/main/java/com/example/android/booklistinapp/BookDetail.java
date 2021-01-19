@@ -10,6 +10,7 @@ public class BookDetail
     private String imageLink;
     private String bookPreviewLink;
 
+    //Constructor for creating object of BookDetail
     public BookDetail(String title, String authors, String publisher, double rating, String imageLink, String bookPreviewLink)
     {
         Log.i(LOG_TAG, "INSIDE BookDetail Constructor");

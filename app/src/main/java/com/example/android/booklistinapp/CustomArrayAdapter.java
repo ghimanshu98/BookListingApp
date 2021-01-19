@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 public class CustomArrayAdapter extends ArrayAdapter {

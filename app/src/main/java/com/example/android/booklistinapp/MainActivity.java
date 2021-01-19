@@ -19,9 +19,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Setting the toolbar on the MainActivityPage
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Adding reference of Submit Button and setting onClickListener
         Button button = (Button) findViewById(R.id.submitButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,17 +31,19 @@ public class MainActivity extends AppCompatActivity {
                 //Retrieving text from EditText fields
                 EditText editText = (EditText) findViewById(R.id.search);
                 String searched_text = editText.getText().toString();
-                Log.i(LOG_TAG, "Searched Book: "+searched_text);
+                //Log.i(LOG_TAG, "Searched Book: "+searched_text);
 
+                //if retrieved text is not empty then send the intent to onSubmitActivity
                 if(!searched_text.isEmpty())
                 {
                     Intent intent = new Intent(MainActivity.this, OnSubmitActivity.class);
+                    //Putting the searchedText with the intent
                     intent.putExtra("BOOK_KEY" , searched_text);
                     startActivity(intent);
                 }
-                else
+                else // Create a toast message
                 {
-                    Log.e(LOG_TAG, "making Toast");
+                    //Log.e(LOG_TAG, "making Toast");
                     Toast.makeText(getBaseContext(), "Enter Something to Search", Toast.LENGTH_SHORT).show();
                 }
             }

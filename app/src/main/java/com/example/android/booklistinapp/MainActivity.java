@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Retrieving text from EditText fields
-                EditText editText = (EditText) findViewById(R.id.search);
-                String searched_text = editText.getText().toString();
+//                EditText editText = (EditText) findViewById(R.id.search);
+//                String searched_text = editText.getText().toString();
+                androidx.appcompat.widget.SearchView searchView = findViewById(R.id.search);
+                String searched_text = searchView.getQuery().toString();
                 //Log.i(LOG_TAG, "Searched Book: "+searched_text);
 
                 //if retrieved text is not empty then send the intent to onSubmitActivity

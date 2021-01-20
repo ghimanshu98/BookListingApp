@@ -26,21 +26,31 @@
         android:alpha="0.7"
         />
 
-    <EditText
-        android:layout_below="@id/toolbar"
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/SearchHint"
-        android:textColorHint="@color/onPrimary"
-        android:paddingLeft="8dp"
+        android:layout_below="@id/toolbar"
+        app:queryHint="@string/SearchHint"
+        app:iconifiedByDefault="false"
         android:inputType="text"
-        android:layout_marginTop="5dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textSize="18sp"
-        android:textColor="@color/onPrimary"
-        android:fontFamily="sans-serif-medium"
+        android:theme="@style/SearchViewStyle"
         />
+<!--    <EditText-->
+<!--        android:layout_below="@id/toolbar"-->
+<!--        android:id="@+id/search"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="@string/SearchHint"-->
+<!--        android:textColorHint="@color/onPrimary"-->
+<!--        android:paddingLeft="8dp"-->
+<!--        android:inputType="text"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textColor="@color/onPrimary"-->
+<!--        android:fontFamily="sans-serif-medium"-->
+<!--        />-->
 
     <View
         android:id="@+id/divider"

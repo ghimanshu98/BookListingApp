@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,10 +61,9 @@ public class CustomArrayAdapter extends ArrayAdapter {
 //        textView.setText(placeholder.getDescription());
 //        textView.setMovementMethod(new ScrollingMovementMethod());
 
-        //setting the rating
-        textView = (TextView) listItemView.findViewById(R.id.rating);
-        textView.setText("Rating : "+placeholder.getRating());
-
+        //setting the rating;
+        RatingBar ratingBar = (RatingBar) listItemView.findViewById(R.id.rating_bar);
+        ratingBar.setRating((float)placeholder.getRating());
         return listItemView;
     }
 }

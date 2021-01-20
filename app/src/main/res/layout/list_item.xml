@@ -70,28 +70,26 @@
         android:padding="4dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/rating"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            tools:text="@string/Rating"
-            android:textSize="14sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:gravity="center_vertical|left"
-            android:textStyle="bold"
-            android:textColor="@color/onPrimary"
-            android:fontFamily="sans-serif-light"/>
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="?android:attr/ratingBarStyleSmall"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:progressBackgroundTint="@color/black"
+            />
 
         <TextView
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:id="@+id/publisher"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="@string/Publisher"
             android:textSize="12sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:gravity="center_vertical|right"
+            android:gravity ="end"
             android:textColor="@color/onPrimary"
             android:fontFamily="sans-serif-light"/>
         </LinearLayout>

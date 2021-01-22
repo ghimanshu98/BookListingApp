@@ -7,6 +7,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -100,19 +102,19 @@ public class OnSubmitActivity extends AppCompatActivity implements LoaderManager
             emptyTextView.setText("No Internet Available!!\nCheck Your Internet Connection.");
         }
 
-        //setting refresh button in toolbar and creating intent on pressed
-        Button refresh = (Button) findViewById(R.id.refresh);
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OnSubmitActivity.this, OnSubmitActivity.class);
-                intent.putExtra("BOOK_KEY", searched_text);
-                // intent to new activity
-                startActivity(intent);
-                //Closing the last activity
-                finish();
-            }
-        });
+//        //setting refresh button in toolbar and creating intent on pressed
+//        Button refresh = (Button) findViewById();
+//        refresh.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(OnSubmitActivity.this, OnSubmitActivity.class);
+//                intent.putExtra("BOOK_KEY", searched_text);
+//                // intent to new activity
+//                startActivity(intent);
+//                //Closing the last activity
+//                finish();
+//            }
+//        });
     }
 
     @NonNull
@@ -156,5 +158,26 @@ public class OnSubmitActivity extends AppCompatActivity implements LoaderManager
             Log.i(LOG_TAG, "Internet_Connected "+"False");
             return false;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.resfresh_button)
+        {
+            Intent intent = new Intent(OnSubmitActivity.this, OnSubmitActivity.class);
+            intent.putExtra("BOOK_KEY", searched_text);
+            // intent to new activity
+            startActivity(intent);
+            //Closing the last activity
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
